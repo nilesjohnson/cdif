@@ -154,6 +154,22 @@ my %colormap = (
     APPEND  => $opt_256 ? "/544": "RDw",
     );
 
+# override default colormap with config file
+sub trim($);
+my $custom_config="$ENV{'HOME'}".'/.cdif-colormap';
+if (-e $custom_config) {
+    open(CFG,$custom_config);
+    while (<CFG>)
+    {
+	chomp;
+	my ($key, $val) = split /=/;
+	$key = trim($key);
+	$val = trim($val);
+	$colormap{$key} = $val;
+    }
+}
+
+
 if (@opt_colormap) {
     map {
 	my $c = pop @$_;
@@ -794,6 +810,18 @@ sub terminal_width {
     chomp $cols;
     $cols > 0 ? int($cols) : $default;
 }
+
+##
+## Trim whitespace
+##
+sub trim($)
+{
+	my $string = shift;
+	$string =~ s/^\s+//;
+	$string =~ s/\s+$//;
+	return $string;
+}
+
 
 ######################################################################
 
