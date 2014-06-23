@@ -156,7 +156,7 @@ my %colormap = (
 
 # override default colormap with config file
 sub trim($);
-my $custom_config="$ENV{'HOME'}".'/.cdif-colormap';
+my $custom_config="$ENV{'HOME'}".'/.sdif-colormap';
 if (-e $custom_config) {
     open(CFG,$custom_config);
     while (<CFG>)
